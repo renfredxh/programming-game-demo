@@ -1,22 +1,6 @@
 BasicGame.Game = function (game) {
-  this.game;
-  this.add;
-  this.camera;
-  this.cache;
-  this.input;
-  this.load;
-  this.math;
-  this.sound;
-  this.stage;
-  this.time;
-  this.tweens;
-  this.state;
-  this.world;
-  this.particles;
-  this.physics;
-  this.rnd;
-
   this.PLAYER_ACCELERATION = 400;
+  this.editing = false;
 };
 
 BasicGame.Game.prototype = {
@@ -44,11 +28,17 @@ BasicGame.Game.prototype = {
     //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
     // Controls
-    this.cursors = this.game.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
   },
 
   update: function () {
     this.movePlayer();
+    if (this.spacebar.isDown && this.editing === false) {
+      this.editing = true;
+      GameEditor.show();
+    }
   },
 
   movePlayer: function() {
@@ -65,7 +55,7 @@ BasicGame.Game.prototype = {
     if (delta !== null && this.player.data.moving === false) {
       this.player.data.moving = true;
       move = this.add.tween(this.player);
-      move.to(delta, 200, Phaser.Easing.Linear.None)
+      move.to(delta, 200, Phaser.Easing.Linear.None);
       move.onComplete.addOnce(function() {
         this.player.data.moving = false;
       }, this);

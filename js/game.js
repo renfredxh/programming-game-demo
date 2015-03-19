@@ -50,6 +50,7 @@ BasicGame.Game.prototype = {
       this.editing = true;
       this.editor.show();
     }
+    this.level.update();
   },
 
   movePlayer: function() {
@@ -82,6 +83,7 @@ BasicGame.Game.prototype = {
   render: function() {
     if (this.DEBUG_MODE === true) {
       this.debug.body(this.player);
+      this.debug.body(this.blocks.getAt(0));
       this.debug.bodyInfo(this.player, 16, 24);
     }
   }

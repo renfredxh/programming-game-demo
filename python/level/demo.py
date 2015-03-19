@@ -8,8 +8,8 @@ class Block:
         self.obj = level.blocks.get(id)
         self.color = self.obj.color
 
-    def move(self, dist):
-        self.obj.move(dist)
+    def move(self, direction, distance):
+        self.obj.move(direction, distance)
 
     def __setattr__(self, name, value):
         object.__setattr__(self, name, value)

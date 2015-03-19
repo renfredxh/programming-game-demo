@@ -43,13 +43,14 @@ BasicGame.Game.prototype = {
 
   movePlayer: function() {
     var delta = null;
-    if (this.cursors.left.isDown) {
+    var blocked = this.player.body.blocked;
+    if (this.cursors.left.isDown && blocked.left !== true) {
       delta = {x: this.player.body.x - 64};
-    } else if (this.cursors.right.isDown) {
+    } else if (this.cursors.right.isDown && blocked.right !== true) {
       delta = {x: this.player.body.x + 64};
-    } else if (this.cursors.down.isDown) {
+    } else if (this.cursors.down.isDown && blocked.down !== true) {
       delta = {y: this.player.body.y + 64};
-    } else if (this.cursors.up.isDown) {
+    } else if (this.cursors.up.isDown && blocked.up !== true) {
       delta = {y: this.player.body.y - 64};
     }
     if (delta !== null && this.player.data.moving === false) {

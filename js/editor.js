@@ -7,7 +7,7 @@ var GameEditor = {
       this.preamble = data;
     }.bind(this));
 
-    $('#run').click(this.run.bind(this));
+    $('#run-button').click(this.run.bind(this));
   },
   reposition: function() {
     var pos = $('#game canvas').offset();

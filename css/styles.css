@@ -6,6 +6,23 @@ body {
   margin-left: 0;
   margin-right: 0;
 }
+.run-button {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  width: 4em;
+  z-index: 20;
+  padding: 8px 12px;
+  background-color: #43A047;
+  color: white;
+  opacity: 0.85;
+  text-align: center;
+  cursor: pointer;
+}
+.run-button:hover {
+  opacity: 0.95;
+  background-color: #4CAF50;
+}
 #editor { 
   position: absolute;
   top: 0;

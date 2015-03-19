@@ -34,9 +34,10 @@ var GameEditor = {
   },
   run: function() {
     var code = this.editor.getValue();
-    code = this.preamble + "\n" + code;
+    var levelScript = Level.script;
+    code = this.preamble + "\n" + levelScript + "\n" + code;
     $('#game-script').text(code);
-    console.log(code)
+    $('#console').text('');
     brython({debug: 0, ipy_id:['game-script']});
   }
 };

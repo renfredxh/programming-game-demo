@@ -2,6 +2,8 @@ BasicGame.Game = function(game) {
   this.DEBUG_MODE = false;
   this.PLAYER_ACCELERATION = 400;
   this.editing = false;
+  this.editor = GameEditor
+  this.level = Level
 };
 
 BasicGame.Game.prototype = {
@@ -30,7 +32,12 @@ BasicGame.Game.prototype = {
 
     // Controls
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.escapeKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
+
+    // Level
+    this.level.initialize(this);
+    // Give brython access to the level object so it can call its functions
+    window.level = this.level;
 
     // Debug
     this.debug = new Phaser.Utils.Debug(window.game);
@@ -39,9 +46,9 @@ BasicGame.Game.prototype = {
 
   update: function() {
     this.movePlayer();
-    if (this.spacebar.isDown && this.editing === false) {
+    if (this.escapeKey.isDown && this.editing === false) {
       this.editing = true;
-      GameEditor.show();
+      this.editor.show();
     }
   },
 

@@ -32,6 +32,9 @@ var GameEditor = {
     });
     this.editor.getSession().setMode("ace/mode/python");
   },
+  hide: function() {
+    this.$el.hide();
+  },
   run: function() {
     var code = this.editor.getValue();
     var levelScript = Level.script;

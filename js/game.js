@@ -39,6 +39,10 @@ BasicGame.Game.prototype = {
     // Give brython access to the level object so it can call its functions
     window.level = this.level;
 
+    // Editor
+    this.editReady = true;
+    this.editKeyTimer = this.time.now;
+
     // Debug
     this.debug = new Phaser.Utils.Debug(window.game);
     this.debug.context = this.game.context;
@@ -46,11 +50,29 @@ BasicGame.Game.prototype = {
 
   update: function() {
     this.movePlayer();
-    if (this.escapeKey.isDown && this.editing === false) {
-      this.editing = true;
-      this.editor.show();
-    }
+    this.updateEditMode();
     this.level.update();
+  },
+
+  updateEditMode: function() {
+    var currentTile = this.map.getTileWorldXY(this.player.body.x, this.player.body.y);
+    var onEditorTile = currentTile.properties.editor === '1';
+    if (this.escapeKey.isDown && this.time.now > this.editKeyTimer) {
+      this.editing = false;
+      this.editor.hide();
+      this.editReady = false;
+      this.editKeyTimer = this.time.now + 500;
+    }
+    if (onEditorTile) {
+      if (this.editing === false && this.editReady === true) {
+        this.editing = true;
+        this.editor.show();
+        this.editReady = false;
+      }
+    } else {
+      this.editing = false;
+      this.editor.hide();
+    }
   },
 
   movePlayer: function() {
@@ -71,6 +93,7 @@ BasicGame.Game.prototype = {
       move.to(delta, 200, Phaser.Easing.Linear.None);
       move.onComplete.addOnce(function() {
         this.player.data.moving = false;
+        this.editReady = true;
       }, this);
       move.start();
     }

@@ -31,10 +31,10 @@ body {
   display: none;
 }
 #script {
-  height: 80%;
+  height: 75%;
 }
 .console {
-  height: 20%;
+  height: 25%;
   padding: 14px;
   margin: 0;
   background-color: #212121;

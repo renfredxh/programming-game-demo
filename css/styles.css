@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background: white;
+  margin-left: 0;
+  margin-right: 0;
+}
+#editor { 
+  position: absolute;
+  top: 0;
+  opacity: 0.9;
+  z-index: 10;
+  display: none;
+}
+#script {
+  height: 85%;
+}
+#console {
+  height: 15%;
+  padding: 14px;
+  margin: 0;
+  background-color: #212121;
+  color: #ffffff;
+  font-family: "Consolas", monospace;
+}
+canvas {
+  margin: 0 auto;
+}
+button {
+  float: left;
+}

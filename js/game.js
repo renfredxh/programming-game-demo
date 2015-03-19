@@ -1,7 +1,7 @@
 BasicGame.Game = function(game) {
+  this.DEBUG_MODE = false;
   this.PLAYER_ACCELERATION = 400;
   this.editing = false;
-  this.DEBUG_MODE = false;
 };
 
 BasicGame.Game.prototype = {

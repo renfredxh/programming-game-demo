@@ -16,4 +16,7 @@ class Block:
         if name in ['color']:
             self.obj.set(name, value)
 
-block = Block('1')
+block1 = Block('1')
+block2 = Block('2')
+block3 = Block('3')
+block4 = Block('4')

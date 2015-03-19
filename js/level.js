@@ -12,7 +12,10 @@ Level = {
     this.game = game;
     this.game.blocks = this.game.add.group();
     this.blocks = new LevelObjectCollection({
-      1: new this.Block('blue', 2, 2)
+      1: new this.Block('black', 2, 2),
+      2: new this.Block('black', 9, 2),
+      3: new this.Block('black', 2, 6),
+      4: new this.Block('black', 9, 6)
     });
     $.get('python/level/demo.py', function(data) {
       this.script = data;

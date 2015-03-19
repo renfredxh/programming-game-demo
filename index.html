@@ -4,39 +4,65 @@
   <meta charset="utf-8">
   <title></title>
   <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-  <script src="js/phaser.js"></script>
+  <script src="js/vendor/phaser.js"></script>
   <script src="js/vendor/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/vendor/brython.js"></script>
   <script src="js/boot.js"></script>
   <script src="js/preloader.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/game.js"></script>
   <script src="js/editor.js"></script>
 <style>
+* {
+  box-sizing: border-box;
+}
 body {
   background: white;
   margin-left: 0;
   margin-right: 0;
 }
 #editor { 
-    position: absolute;
-    top: 0;
-    opacity: 0.9;
-    z-index: 10;
-    display: none;
+  position: absolute;
+  top: 0;
+  opacity: 0.9;
+  z-index: 10;
+  display: none;
+}
+#script {
+  height: 85%;
+}
+#console {
+  height: 15%;
+  padding: 14px;
+  margin: 0;
+  background-color: #212121;
+  color: #ffffff;
+  font-family: "Consolas", monospace;
 }
 canvas {
   margin: 0 auto;
+}
+button {
+  float: left;
 }
 </style>
 </head>
 <body>
   <div id="game">
-    <div id="editor">function foo(items) {
-      var x = "All this is syntax highlighted";
-      return x;
-  }
+    <div id="editor">
+      <div id="script">numbers = [2, 4, 6, 8]
+product = 1
+for number in numbers:
+    product = product * number
+
+from browser import document, alert
+print(product)
+      </div>
+      <pre id="console">
+      </pre>
     </div>
   </div>
+  <button id="run">Run</button>
 <script type="text/javascript">
 window.onload = function() {
   window.game = new Phaser.Game(1920, 1080, Phaser.CANVAS, 'game');
@@ -50,5 +76,6 @@ window.onload = function() {
   GameEditor.initialize();
 };
 </script>
+<script id="game-script" type="text/python"></script>
 </body>
 </html>

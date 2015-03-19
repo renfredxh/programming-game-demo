@@ -37,7 +37,7 @@ var GameEditor = {
     var levelScript = Level.script;
     code = this.preamble + "\n" + levelScript + "\n" + code;
     $('#game-script').text(code);
-    $('#console').text('');
-    brython({debug: 0, ipy_id:['game-script']});
+    $('#console').text('➔ ');
+    console.warn(brython({debug: 1, ipy_id:['game-script']}));
   }
 };

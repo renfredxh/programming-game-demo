@@ -31,15 +31,19 @@ body {
   display: none;
 }
 #script {
-  height: 85%;
+  height: 80%;
 }
-#console {
-  height: 15%;
+.console {
+  height: 20%;
   padding: 14px;
   margin: 0;
   background-color: #212121;
   color: #ffffff;
   font-family: "Consolas", monospace;
+  overflow-y: scroll;
+}
+.console .error {
+  color: #ef5350;
 }
 canvas {
   margin: 0 auto;

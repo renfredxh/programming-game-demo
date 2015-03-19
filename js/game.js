@@ -1,11 +1,12 @@
-BasicGame.Game = function (game) {
+BasicGame.Game = function(game) {
   this.PLAYER_ACCELERATION = 400;
   this.editing = false;
+  this.DEBUG_MODE = false;
 };
 
 BasicGame.Game.prototype = {
 
-  create: function () {
+  create: function() {
     // Map
     this.map = this.add.tilemap('demoLevel');
     this.map.addTilesetImage('tiles');
@@ -31,9 +32,12 @@ BasicGame.Game.prototype = {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+    // Debug
+    this.debug = new Phaser.Utils.Debug(window.game);
+    this.debug.context = this.game.context;
   },
 
-  update: function () {
+  update: function() {
     this.movePlayer();
     if (this.spacebar.isDown && this.editing === false) {
       this.editing = true;
@@ -64,7 +68,14 @@ BasicGame.Game.prototype = {
     }
   },
 
-  quitGame: function (pointer) {
+  quitGame: function(pointer) {
     this.state.start('Game');
+  },
+
+  render: function() {
+    if (this.DEBUG_MODE === true) {
+      this.debug.body(this.player);
+      this.debug.bodyInfo(this.player, 16, 24);
+    }
   }
 };

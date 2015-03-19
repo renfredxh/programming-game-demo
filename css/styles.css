@@ -23,7 +23,11 @@ body {
   opacity: 0.95;
   background-color: #4CAF50;
 }
-#editor { 
+.editor-header {
+  background-color: #212121;
+  height: 2%;
+}
+#editor {
   position: absolute;
   top: 0;
   opacity: 0.9;
@@ -31,7 +35,8 @@ body {
   display: none;
 }
 #script {
-  height: 75%;
+  height: 73%;
+  padding-top: 5%;
 }
 .console {
   height: 25%;

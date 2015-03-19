@@ -1,6 +1,7 @@
 var GameEditor = {
   initialize: function() {
     this.$el = $('#editor');
+    this.fontSize = "12pt";
     this.editor = null;
 
     $.get('python/preamble.py', function(data) {
@@ -28,8 +29,9 @@ var GameEditor = {
     this.editor.setOptions({
       theme: "ace/theme/monokai",
       fontFamily: "Consolas",
-      fontSize: "12pt"
+      fontSize: this.fontSize
     });
+    $('#console').css({ fontSize: this.fontSize });
     this.editor.getSession().setMode("ace/mode/python");
   },
   hide: function() {

@@ -1,23 +1,26 @@
 BasicGame.Game = function(game) {
   this.DEBUG_MODE = false;
   this.PLAYER_ACCELERATION = 400;
+  this.PLAYER_VELOCITY = 256;
   this.editing = false;
-  this.editor = GameEditor
-  this.level = Level
+  this.editor = GameEditor;
+  this.level = Level;
 };
 
 BasicGame.Game.prototype = {
 
   create: function() {
     // Map
-    this.map = this.add.tilemap('demoLevel');
+    this.map = this.add.tilemap(this.level.tileMap);
     this.map.addTilesetImage('tiles');
-    this.map.setCollisionByExclusion([]);
-    this.layer = this.map.createLayer(0);
-    this.layer.resizeWorld();
+    this.lowerLayer = this.map.createLayer(0);
+    this.upperLayer = this.map.createLayer(1);
+    this.map.setCollisionBetween(0, 100, true, 1);
+    this.lowerLayer.resizeWorld();
+    //this.upperLayer.resizeWorld();
 
     // Player
-    this.player = this.game.add.sprite(0, 0, 'player');
+    this.player = this.game.add.sprite(this.level.playerStart.x, this.level.playerStart.y, 'player');
     this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
     this.player.body.collideWorldBounds = true;
     this.game.camera.follow(this.player);
@@ -27,8 +30,8 @@ BasicGame.Game.prototype = {
 
     // Scaling
     this.scale.setupScale(1280, 720);
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.scale.refresh();
-    //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
     // Controls
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -49,9 +52,15 @@ BasicGame.Game.prototype = {
   },
 
   update: function() {
+    this.physics.arcade.collide(this.player, this.upperLayer, this.playerCollide.bind(this));
     this.movePlayer();
     this.updateEditMode();
     this.level.update();
+  },
+
+  playerCollide: function() {
+    console.log("HEY");
+    this.player.data.moving = false;
   },
 
   updateEditMode: function() {
@@ -78,24 +87,47 @@ BasicGame.Game.prototype = {
   movePlayer: function() {
     var delta = null;
     var blocked = this.player.body.blocked;
-    if (this.cursors.left.isDown && blocked.left !== true) {
-      delta = {x: this.player.body.x - 64};
-    } else if (this.cursors.right.isDown && blocked.right !== true) {
-      delta = {x: this.player.body.x + 64};
-    } else if (this.cursors.down.isDown && blocked.down !== true) {
-      delta = {y: this.player.body.y + 64};
-    } else if (this.cursors.up.isDown && blocked.up !== true) {
-      delta = {y: this.player.body.y - 64};
+    if (this.player.body.onWall()) {
+      this.playerCollide();
+    }
+    if (this.player.data.moving === false) {
+      if (this.cursors.left.isDown) {
+        this.player.data.next = { x: this.player.body.x - 64, y: this.player.body.y };
+        this.player.body.velocity.x = -this.PLAYER_VELOCITY;
+        delta = 'left';
+      } else if (this.cursors.right.isDown) {
+        this.player.data.next = { x: this.player.body.x + 64, y: this.player.body.y };
+        this.player.body.velocity.x = this.PLAYER_VELOCITY;
+        delta = 'right';
+      } else if (this.cursors.down.isDown) {
+        this.player.data.next = { x: this.player.body.x, y: this.player.body.y + 64 };
+        this.player.body.velocity.y = this.PLAYER_VELOCITY;
+        delta = 'down';
+      } else if (this.cursors.up.isDown) {
+        this.player.data.next = { x: this.player.body.x, y: this.player.body.y - 64 };
+        this.player.body.velocity.y = -this.PLAYER_VELOCITY;
+        delta = 'up';
+      }
     }
     if (delta !== null && this.player.data.moving === false) {
+      this.player.data.facing = delta;
       this.player.data.moving = true;
-      move = this.add.tween(this.player);
-      move.to(delta, 200, Phaser.Easing.Linear.None);
-      move.onComplete.addOnce(function() {
+    }
+    if (this.player.data.moving === true) {
+      if ({
+        up: this.player.body.y <= this.player.data.next.y,
+        down: this.player.body.y >= this.player.data.next.y,
+        left: this.player.body.x <= this.player.data.next.x,
+        right: this.player.body.x >= this.player.data.next.x,
+      }[this.player.data.facing]) {
+        this.player.body.velocity.x = 0;
+        this.player.body.velocity.y = 0;
+        this.player.body.x = this.player.data.next.x;
+        this.player.body.y = this.player.data.next.y;
         this.player.data.moving = false;
         this.editReady = true;
-      }, this);
-      move.start();
+        console.log(this.player.body.x, this.player.body.y);
+      }
     }
   },
 
@@ -105,6 +137,7 @@ BasicGame.Game.prototype = {
 
   render: function() {
     if (this.DEBUG_MODE === true) {
+      this.upperLayer.debug = true;
       this.debug.body(this.player);
       this.debug.body(this.blocks.getAt(0));
       this.debug.bodyInfo(this.player, 16, 24);

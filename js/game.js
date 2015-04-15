@@ -10,6 +10,9 @@ BasicGame.Game = function(game) {
 BasicGame.Game.prototype = {
 
   create: function() {
+    // Background
+    this.background = this.add.tileSprite(0, 0, Util.fromTile(100), Util.fromTile(100), 'hexground');
+
     // Map
     this.map = this.add.tilemap(this.level.tileMap);
     this.map.addTilesetImage('tiles');
@@ -17,7 +20,7 @@ BasicGame.Game.prototype = {
     this.upperLayer = this.map.createLayer(1);
     this.map.setCollisionBetween(0, 100, true, 1);
     this.lowerLayer.resizeWorld();
-    //this.upperLayer.resizeWorld();
+    this.upperLayer.resizeWorld();
 
     // Player
     this.player = this.game.add.sprite(this.level.playerStart.x, this.level.playerStart.y, 'player');
@@ -53,18 +56,25 @@ BasicGame.Game.prototype = {
 
   update: function() {
     this.physics.arcade.collide(this.player, this.upperLayer, this.playerCollide.bind(this));
+    this.scrollBackground();
     this.movePlayer();
     this.updateEditMode();
     this.level.update();
   },
 
+  scrollBackground: function() {
+    this.background.tilePosition.x -= 0.75;
+  },
+
   playerCollide: function() {
-    console.log("HEY");
     this.player.data.moving = false;
   },
 
   updateEditMode: function() {
     var currentTile = this.map.getTileWorldXY(this.player.body.x, this.player.body.y);
+    if (currentTile === null) {
+      return;
+    }
     var onEditorTile = currentTile.properties.editor === '1';
     if (this.escapeKey.isDown && this.time.now > this.editKeyTimer) {
       this.editing = false;
@@ -126,7 +136,6 @@ BasicGame.Game.prototype = {
         this.player.body.y = this.player.data.next.y;
         this.player.data.moving = false;
         this.editReady = true;
-        console.log(this.player.body.x, this.player.body.y);
       }
     }
   },

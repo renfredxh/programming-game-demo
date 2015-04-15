@@ -13,6 +13,7 @@ BasicGame.Preloader.prototype = {
     this.load.image('tiles', 'assets/images/tiles.png');
     this.load.image('hexground', 'assets/images/background.png');
     this.load.spritesheet('block', 'assets/images/blocks.png', 64, 64);
+    this.load.spritesheet('door', 'assets/images/door.png', 128, 192);
   },
 
   create: function () {

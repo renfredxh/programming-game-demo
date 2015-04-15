@@ -17,10 +17,7 @@ BasicGame.Game.prototype = {
     this.map = this.add.tilemap(this.level.tileMap);
     this.map.addTilesetImage('tiles');
     this.lowerLayer = this.map.createLayer(0);
-    this.upperLayer = this.map.createLayer(1);
-    this.map.setCollisionBetween(0, 100, true, 1);
     this.lowerLayer.resizeWorld();
-    this.upperLayer.resizeWorld();
 
     // Player
     this.player = this.game.add.sprite(this.level.playerStart.x, this.level.playerStart.y, 'player');
@@ -41,9 +38,15 @@ BasicGame.Game.prototype = {
     this.escapeKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
     // Level
+    this.objects = this.add.group();
     this.level.initialize(this);
     // Give brython access to the level object so it can call its functions
     window.level = this.level;
+
+    // Put this down here so upper layer assets overlap the previous sprites.
+    this.upperLayer = this.map.createLayer(1);
+    this.map.setCollisionByExclusion([11], true, this.upperLayer);
+    this.upperLayer.resizeWorld();
 
     // Editor
     this.editReady = true;
@@ -56,6 +59,7 @@ BasicGame.Game.prototype = {
 
   update: function() {
     this.physics.arcade.collide(this.player, this.upperLayer, this.playerCollide.bind(this));
+    this.physics.arcade.collide(this.player, this.objects, this.playerCollide.bind(this));
     this.scrollBackground();
     this.movePlayer();
     this.updateEditMode();

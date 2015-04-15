@@ -19,6 +19,7 @@ Level = {
       3: new this.Block('black', 2, 6),
       4: new this.Block('black', 9, 6)
     });
+    new this.Door(16, 15);
     $.get('python/level/demo.py', function(data) {
       this.script = data;
     }.bind(this));
@@ -36,6 +37,15 @@ Level = {
     Level.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.immovable = true;
     this.update();
+  },
+  Door: function(x, y) {
+    this.x = x;
+    this.y = y;
+    this.moveTween = null;
+    this.sprite = Level.game.objects.create(Util.fromTile(x), Util.fromTile(y), 'door');
+    Level.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.immovable = true;
+    this.sprite.frame = 0;
   },
 };
 

@@ -94,7 +94,6 @@ var GameEditor = {
     this.configure();
     $('#console').css({ fontSize: this.fontSize });
     if (this.variables && this.variables.length > 0) {
-      console.log(this.variables);
       this.showVariables();
     } else {
       console.log(this.variables);
@@ -106,6 +105,11 @@ var GameEditor = {
     $('#variables').empty();
     $.each(this.variables, function(i, variable) {
       $('#variables').append("<div class='variable'>" + variable + "</div>");
+    });
+    var editor = this.editor;
+    var session = this.editor.getSession();
+    $('.variable').click(function() {
+      session.insert(editor.getCursorPosition(), $(this).text());
     });
     $('#script').css('height', '70%');
     $('#variables').show();

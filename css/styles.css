@@ -66,6 +66,7 @@ body {
   color: #ffffff;
   display: inline-block;
   font-family: "Consolas", monospace;
+  cursor: pointer;
 }
 .console {
   height: 25%;

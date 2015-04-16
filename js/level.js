@@ -8,8 +8,7 @@ LevelObjectCollection.prototype.get = function(id) {
 
 Level = {
   name: "Demo",
-  //playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
-  playerStart: { x: Util.fromTile(36), y: Util.fromTile(72) },
+  playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
   tileMap: 'demoLevel',
   scriptDataset: {
     '31,88': {
@@ -34,10 +33,10 @@ Level = {
       level: "level-4.py",
       player: "demo-4.py",
       autocomplete: [
-        { caption: "'left'", value: 'left'},
-        { caption: "'right'", value: 'right'},
-        { caption: "'up'", value: 'up'},
-        { caption: "'down'", value: 'down'},
+        { caption: "'left'", value: "left'"},
+        { caption: "'right'", value: "right'"},
+        { caption: "'up'", value: "up'"},
+        { caption: "'down'", value: "down'"},
         { caption: 'move(direction, distance)', value: 'move(', meta: 'method', className: 'block' },
       ]
     },
@@ -45,7 +44,7 @@ Level = {
       level: "level-5.py",
       player: "demo-5.py",
       autocomplete: [
-        { caption: 'move(direction, distance)', value: 'move(', meta: 'method', className: 'block' },
+        { caption: 'open(key)', value: 'open(', meta: 'method', className: 'door' },
       ]
     },
   },
@@ -62,8 +61,8 @@ Level = {
     this.doors = new LevelObjectCollection({
       1: new this.Door(31, 84),
       2: new this.Door(27, 77),
-      3: new this.door(36, 67),
-      4: new this.door(22, 70)
+      3: new this.Door(36, 67),
+      4: new this.Door(22, 70)
     });
     this.largeBlocks = new LevelObjectCollection({
       1: new this.LargeBlock(40, 71),
@@ -212,7 +211,7 @@ Level.LargeBlock.prototype.move = function(direction, distance) {
       delta = null;
   }
   if (delta !== null) {
-    var t = game.add.tween(this.sprite).to(delta, 800, Phaser.Easing.Quadratic.Out, true);
+    var t = game.add.tween(this.sprite).to(delta, 1200, Phaser.Easing.Quadratic.Out, true);
     var block = this;
     t.onComplete.add(function() {
       console.log(block.x, block.y);

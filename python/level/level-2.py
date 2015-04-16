@@ -5,6 +5,11 @@ SCRIPT_ID = '31,88'
 level = window.Level
 variables = (level.variables.to_dict()).get(SCRIPT_ID)
 
+def hint():
+    print('Methods are actions you can use to make objects do things. '
+          '\n\nYou can activate them by typing "&lt;name of object&gt;.&lt;name of method&gt;()".'
+          '\n\nTry running "door.open()"!')
+
 class Door:
 
     def __init__(self, id):

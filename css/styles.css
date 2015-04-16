@@ -76,6 +76,7 @@ body {
   color: #ffffff;
   font-family: "Consolas", monospace;
   overflow-y: scroll;
+  white-space: pre-wrap;
 }
 .console .error {
   color: #ef5350;

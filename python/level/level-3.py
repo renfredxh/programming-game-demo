@@ -5,6 +5,10 @@ SCRIPT_ID = '27,81'
 level = window.Level
 variables = (level.variables.to_dict()).get(SCRIPT_ID)
 
+def hint():
+    print('Some methods require you to put items they need to work inside the parenthesis.'
+          '\n\nThis door needs a password. Once you have it, try running "door.open(password)"')
+
 class MissingPasswordError(Exception):
     pass
 

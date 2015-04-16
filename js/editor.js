@@ -85,12 +85,30 @@ var GameEditor = {
     });
   },
   show: function(x, y) {
-    this.scripts = Level.scripts[[x, y].toString()];
+    this.scriptId = [x, y].toString();
+    this.scripts = Level.scripts[this.scriptId];
+    this.variables = Level.variables[this.scriptId];
     this.reposition();
     this.$el.show();
     this.editor = ace.edit('script');
     this.configure();
     $('#console').css({ fontSize: this.fontSize });
+    if (this.variables && this.variables.length > 0) {
+      console.log(this.variables);
+      this.showVariables();
+    } else {
+      console.log(this.variables);
+      $('#variables').hide();
+      $('#script').css('height', '75%');
+    }
+  },
+  showVariables: function() {
+    $('#variables').empty();
+    $.each(this.variables, function(i, variable) {
+      $('#variables').append("<div class='variable'>" + variable + "</div>");
+    });
+    $('#script').css('height', '70%');
+    $('#variables').show();
   },
   hide: function() {
     this.$el.hide();

@@ -1,6 +1,9 @@
 from browser import window
 
+SCRIPT_ID = '31,88'
+
 level = window.Level
+variables = (level.variables.to_dict()).get(SCRIPT_ID)
 
 class Door:
 
@@ -14,5 +17,9 @@ class Door:
     def close(self):
         if self.obj.is_open:
             self.obj.close()
+
+if variables is not None:
+    if 'password' in variables:
+        print("Oh!")
 
 door = Door('1')

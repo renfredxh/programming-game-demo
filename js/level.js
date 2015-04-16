@@ -24,6 +24,7 @@ Level = {
   initialize: function(game) {
     this.game = game;
     this.game.blocks = this.game.add.group();
+    this.variables = {};
     this.blocks = new LevelObjectCollection({
       1: new this.Block('black', 2, 2),
       2: new this.Block('black', 9, 2),
@@ -33,6 +34,7 @@ Level = {
     this.doors = new LevelObjectCollection({
       1: new this.Door(31, 84)
     });
+    new this.Variaball(41, 81, { script: '31,88', name: 'password' });
   },
   update: function() {
     this.game.physics.arcade.collide(this.game.player, this.game.blocks);
@@ -60,6 +62,14 @@ Level = {
     this.sprite.animations.add('open', [0, 0, 5, 5, 0, 0, 5, 0, 5, 0, 5], 25, false);
     this.sprite.animations.play('default');
   },
+  Variaball: function(x, y, variable) {
+    this.sprite = Level.game.variaballs.create(Util.fromTile(x + 0.5), Util.fromTile(y + 0.5), 'variaball');
+    Level.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.immovable = false;
+    this.sprite.animations.add('digitize', [0, 1, 8, 3, 7, 5, 6, 4, 2, 9], 10, true);
+    this.sprite.animations.play('digitize');
+    this.sprite.variable = variable;
+  }
 };
 
 /**

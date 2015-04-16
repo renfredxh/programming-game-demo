@@ -37,6 +37,9 @@ BasicGame.Game.prototype = {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.escapeKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
+    // Variaballs
+    this.variaballs = this.add.group();
+
     // Level
     this.objects = this.add.group();
     this.level.initialize(this);
@@ -60,6 +63,7 @@ BasicGame.Game.prototype = {
   update: function() {
     this.physics.arcade.collide(this.player, this.upperLayer, this.playerCollide.bind(this));
     this.physics.arcade.collide(this.player, this.objects, this.playerCollide.bind(this));
+    this.physics.arcade.collide(this.player, this.variaballs, this.collectVariable.bind(this));
     this.scrollBackground();
     this.movePlayer();
     this.updateEditMode();
@@ -142,6 +146,17 @@ BasicGame.Game.prototype = {
         this.editReady = true;
       }
     }
+  },
+
+  collectVariable: function(player, variaball) {
+    var variables = this.level.variables;
+    var newVariable = variaball.variable;
+    var scriptId = newVariable.script;
+    if (variables[scriptId] === undefined) {
+      variables[scriptId] = [];
+    }
+    variables[scriptId].push(newVariable.name);
+    variaball.kill();
   },
 
   quitGame: function(pointer) {

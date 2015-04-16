@@ -14,6 +14,7 @@ BasicGame.Preloader.prototype = {
     this.load.image('hexground', 'assets/images/background.png');
     this.load.spritesheet('block', 'assets/images/blocks.png', 64, 64);
     this.load.spritesheet('door', 'assets/images/door.png', 128, 192);
+    this.load.spritesheet('variaball', 'assets/images/variaball.png', 64, 64);
 
     // Load game scripts via AJAX
     Level.scripts = {};

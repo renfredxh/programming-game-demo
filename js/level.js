@@ -9,7 +9,7 @@ LevelObjectCollection.prototype.get = function(id) {
 Level = {
   name: "Demo",
   //playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
-  playerStart: { x: Util.fromTile(31), y: Util.fromTile(81) },
+  playerStart: { x: Util.fromTile(36), y: Util.fromTile(72) },
   tileMap: 'demoLevel',
   scriptDataset: {
     '31,88': {
@@ -30,6 +30,24 @@ Level = {
         { caption: 'close()', value: 'close()', meta: 'method', className: 'door' },
       ]
     },
+    '36,74': {
+      level: "level-4.py",
+      player: "demo-4.py",
+      autocomplete: [
+        { caption: "'left'", value: 'left'},
+        { caption: "'right'", value: 'right'},
+        { caption: "'up'", value: 'up'},
+        { caption: "'down'", value: 'down'},
+        { caption: 'move(direction, distance)', value: 'move(', meta: 'method', className: 'block' },
+      ]
+    },
+    '22,74': {
+      level: "level-5.py",
+      player: "demo-5.py",
+      autocomplete: [
+        { caption: 'move(direction, distance)', value: 'move(', meta: 'method', className: 'block' },
+      ]
+    },
   },
   initialize: function(game) {
     this.game = game;
@@ -43,9 +61,15 @@ Level = {
     });
     this.doors = new LevelObjectCollection({
       1: new this.Door(31, 84),
-      2: new this.Door(27, 77)
+      2: new this.Door(27, 77),
+      3: new this.door(36, 67),
+      4: new this.door(22, 70)
+    });
+    this.largeBlocks = new LevelObjectCollection({
+      1: new this.LargeBlock(40, 71),
     });
     new this.Variaball(41, 81, { script: '27,81', name: 'password' });
+    new this.Variaball(36, 65, { script: '22,74', name: 'key' });
   },
   update: function() {
     this.game.physics.arcade.collide(this.game.player, this.game.blocks);
@@ -60,6 +84,15 @@ Level = {
     Level.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.immovable = true;
     this.update();
+  },
+  LargeBlock: function(x, y) {
+    this.x = x;
+    this.y = y;
+    this.moveTween = null;
+    this.sprite = Level.game.objects.create(Util.fromTile(x), Util.fromTile(y), 'large-block');
+    this.sprite.frame = 0;
+    Level.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.immovable = true;
   },
   Door: function(x, y) {
     this.x = x;
@@ -151,4 +184,43 @@ Level.Door.prototype.close = function() {
     this.is_open = false;
     this.sprite.animations.play('default');
   }, this);
+};
+
+/**
+ * Large block methods.
+ */
+Level.LargeBlock.prototype.move = function(direction, distance) {
+  var delta = null;
+  switch (direction) {
+    case 'left':
+      this.x -= distance;
+      delta = {x: Util.fromTile(this.x)};
+      break;
+    case 'right':
+      this.x += distance;
+      delta = {x: Util.fromTile(this.x)};
+      break;
+    case 'up':
+      this.y -= distance;
+      delta = {y: Util.fromTile(this.y)};
+      break;
+    case 'down':
+      this.y += distance;
+      delta = {y: Util.fromTile(this.y)};
+      break;
+    default:
+      delta = null;
+  }
+  if (delta !== null) {
+    var t = game.add.tween(this.sprite).to(delta, 800, Phaser.Easing.Quadratic.Out, true);
+    var block = this;
+    t.onComplete.add(function() {
+      console.log(block.x, block.y);
+      if (this.x === 32 && this.y === 71) {
+        var door = Level.doors.get(3);
+        door.open();
+        this.sprite.frame = 1;
+      }
+    }, this);
+  }
 };

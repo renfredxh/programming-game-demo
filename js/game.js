@@ -45,7 +45,7 @@ BasicGame.Game.prototype = {
 
     // Put this down here so upper layer assets overlap the previous sprites.
     this.upperLayer = this.map.createLayer(1);
-    this.map.setCollisionByExclusion([11], true, this.upperLayer);
+    this.map.setCollisionByExclusion([33, 34, 35, 44, 45], true, this.upperLayer);
     this.upperLayer.resizeWorld();
 
     // Editor

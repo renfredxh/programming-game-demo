@@ -6,22 +6,39 @@ body {
   margin-left: 0;
   margin-right: 0;
 }
-.run-button {
+.editor-buttons {
   position: absolute;
   top: 0.5em;
-  right: 0.5em;
+  right: 0;
+  height: 10em;
+  z-index: 30;
+}
+.editor-button {
   width: 4em;
+  display: inline-block;
+  float: right;
+  margin-right: 0.4em;
   z-index: 20;
   padding: 8px 12px;
-  background-color: #43A047;
   color: white;
-  opacity: 0.85;
+  opacity: 0.82;
   text-align: center;
   cursor: pointer;
+}
+.run-button {
+  background-color: #43A047;
 }
 .run-button:hover {
   opacity: 0.95;
   background-color: #4CAF50;
+}
+.reset-button {
+  background-color: #839496;
+  display: none;
+}
+.reset-button:hover {
+  opacity: 0.95;
+  background-color: #93a1a1;
 }
 .editor-header {
   background-color: #212121;

@@ -14,7 +14,6 @@ class Door:
 
     def close(self):
         if self.obj.is_open:
-            print("CLOSING")
             self.obj.close()
             self.obj.is_open = False
 

@@ -10,11 +10,9 @@ class Door:
     def open(self):
         if not self.obj.is_open:
             self.obj.open()
-            self.obj.is_open = True
 
     def close(self):
         if self.obj.is_open:
             self.obj.close()
-            self.obj.is_open = False
 
 door = Door('1')

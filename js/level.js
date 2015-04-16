@@ -49,6 +49,7 @@ Level = {
     this.update();
   },
   Door: function(x, y) {
+    this.x = x;
     this.is_open = false;
     this.moveTween = null;
     this.sprite = Level.game.objects.create(Util.fromTile(x), Util.fromTile(y), 'door');
@@ -117,12 +118,16 @@ Level.Block.prototype.update = function() {
  */
 Level.Door.prototype.open = function() {
   this.sprite.animations.play('open');
-  game.add.tween(this.sprite).to({ x: this.sprite.x + 128 }, 1000, Phaser.Easing.Quadratic.Out, true, 800);
+  var t = game.add.tween(this.sprite).to({ x: Util.fromTile(this.x) + 128 }, 1000, Phaser.Easing.Quadratic.Out, true, 800);
+  t.onComplete.add(function() {
+    this.is_open = true;
+  }, this);
 };
 
 Level.Door.prototype.close = function() {
-  var t = game.add.tween(this.sprite).to({ x: this.sprite.x - 128 }, 1000, Phaser.Easing.Quadratic.In, true);
+  var t = game.add.tween(this.sprite).to({ x: Util.fromTile(this.x) }, 1000, Phaser.Easing.Quadratic.In, true);
   t.onComplete.add(function() {
+    this.is_open = false;
     this.sprite.animations.play('default');
   }, this);
 };

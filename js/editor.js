@@ -15,29 +15,41 @@ var GameEditor = {
     ace.Range = ace.require("ace/range").Range;
   },
   /**
+   * Some default autocompletions to be included in every script.
+   */
+  autocomplete: [
+    { caption: 'print', value: 'print(', meta: 'function' },
+  ],
+  /**
    * Autocomplete extension for ace that autocompletes variable and method names
    * for a given level script.
    */
   levelCompleter: {
     getCompletions: function(editor, session, pos, prefix, callback) {
       if (prefix.length === 0) { callback(null, []); return; }
-      var wordList = GameEditor.scripts.autocomplete;
+      var wordList = GameEditor.autocomplete.concat(GameEditor.scripts.autocomplete);
       callback(null, wordList.map(function(word) {
+        var matchRange, match = null;
         var session = editor.getSession();
         if (word.meta === 'method') {
           // For methods, ensure the identifier (matchPrefix) that comes before the current autcomplete
           // matches the appropriate class for that particular method.
           var matchPrefix = word.className + ".";
-          var matchRange = new ace.Range(pos.row, (pos.column - prefix.length - matchPrefix.length),
-                                         pos.row, (pos.column - prefix.length));
-          var match = session.getTextRange(matchRange);
-          if (match !== matchPrefix) { return; }
+          matchRange = new ace.Range(pos.row, (pos.column - prefix.length - matchPrefix.length),
+                                     pos.row, (pos.column - prefix.length));
+          match = session.getTextRange(matchRange);
+          if (match !== matchPrefix) { return {}; }
+        } else if (word.meta === 'function') {
+          matchRange = new ace.Range(pos.row, (pos.column - prefix.length - 1),
+                                     pos.row, (pos.column - prefix.length));
+          match = session.getTextRange(matchRange);
+          // Don't match functions with method calls.
+          if (match === '.') { return {}; }
         }
         return {
           caption: word.caption,
           name: word.value,
           value: word.value,
-          score: Infinity,
           meta: word.meta || 'variable'
         };
       }));

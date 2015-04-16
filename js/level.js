@@ -20,9 +20,6 @@ Level = {
       4: new this.Block('black', 9, 6)
     });
     new this.Door(16, 15);
-    $.get('python/level/demo.py', function(data) {
-      this.script = data;
-    }.bind(this));
   },
   update: function() {
     this.game.physics.arcade.collide(this.game.player, this.game.blocks);

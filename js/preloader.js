@@ -14,6 +14,22 @@ BasicGame.Preloader.prototype = {
     this.load.image('hexground', 'assets/images/background.png');
     this.load.spritesheet('block', 'assets/images/blocks.png', 64, 64);
     this.load.spritesheet('door', 'assets/images/door.png', 128, 192);
+
+    // Load game scripts via AJAX
+    Level.scripts = {};
+    var baseUrl = "python/level/";
+    var scriptFiles = {
+      '16,19': { level: "level-1.py", player: "demo-1.py" },
+    };
+    $.each(scriptFiles, function(name, scriptFile) {
+      Level.scripts[name] = {};
+      $.get(baseUrl + scriptFile.level, function(file) {
+        Level.scripts[name].level = file;
+      });
+      $.get(baseUrl + scriptFile.player , function(file) {
+        Level.scripts[name].player = file;
+      });
+    });
   },
 
   create: function () {

@@ -89,7 +89,7 @@ BasicGame.Game.prototype = {
     if (onEditorTile) {
       if (this.editing === false && this.editReady === true) {
         this.editing = true;
-        this.editor.show();
+        this.editor.show(currentTile.x, currentTile.y);
         this.editReady = false;
       }
     } else {

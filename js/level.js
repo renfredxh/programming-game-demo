@@ -8,7 +8,7 @@ LevelObjectCollection.prototype.get = function(id) {
 
 Level = {
   name: "Demo",
-  playerStart: { x: Util.fromTile(16), y: Util.fromTile(23) },
+  playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
   tileMap: 'demoLevel',
   initialize: function(game) {
     this.game = game;
@@ -19,7 +19,7 @@ Level = {
       3: new this.Block('black', 2, 6),
       4: new this.Block('black', 9, 6)
     });
-    new this.Door(16, 15);
+    new this.Door(31, 84);
   },
   update: function() {
     this.game.physics.arcade.collide(this.game.player, this.game.blocks);

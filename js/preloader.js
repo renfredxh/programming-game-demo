@@ -19,7 +19,7 @@ BasicGame.Preloader.prototype = {
     Level.scripts = {};
     var baseUrl = "python/level/";
     var scriptFiles = {
-      '16,19': { level: "level-1.py", player: "demo-1.py" },
+      '31,88': { level: "level-1.py", player: "demo-1.py" },
     };
     $.each(scriptFiles, function(name, scriptFile) {
       Level.scripts[name] = {};

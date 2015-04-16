@@ -1,7 +1,7 @@
 var GameEditor = {
   initialize: function() {
     this.$el = $('#editor');
-    this.fontSize = "1=pt";
+    this.fontSize = "13pt";
     this.editor = null;
     this.scripts = null;
 

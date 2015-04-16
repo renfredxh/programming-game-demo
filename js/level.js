@@ -19,7 +19,9 @@ Level = {
       3: new this.Block('black', 2, 6),
       4: new this.Block('black', 9, 6)
     });
-    new this.Door(31, 84);
+    this.doors = new LevelObjectCollection({
+      1: new this.Door(31, 84)
+    });
   },
   update: function() {
     this.game.physics.arcade.collide(this.game.player, this.game.blocks);
@@ -36,16 +38,21 @@ Level = {
     this.update();
   },
   Door: function(x, y) {
-    this.x = x;
-    this.y = y;
+    this.is_open = false;
     this.moveTween = null;
     this.sprite = Level.game.objects.create(Util.fromTile(x), Util.fromTile(y), 'door');
     Level.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.immovable = true;
     this.sprite.frame = 0;
+    this.sprite.animations.add('default', [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4], 11, true);
+    this.sprite.animations.add('open', [0, 0, 5, 5, 0, 0, 5, 0, 5, 0, 5], 20, false);
+    this.sprite.animations.play('default');
   },
 };
 
+/**
+ * Block methods.
+ */
 Level.Block.prototype.set = function(name, value) {
   this[name] = value;
   this.update();
@@ -92,4 +99,19 @@ Level.Block.prototype.update = function() {
     'grey': 8,
     'black': 9
   }[this.color];
+};
+
+/**
+ * Door methods.
+ */
+Level.Door.prototype.open = function() {
+  this.sprite.animations.play('open');
+  game.add.tween(this.sprite).to({ x: this.sprite.x + 128 }, 1000, Phaser.Easing.Quadratic.Out, true, 800);
+};
+
+Level.Door.prototype.close = function() {
+  var t = game.add.tween(this.sprite).to({ x: this.sprite.x - 128 }, 800, Phaser.Easing.Quadratic.In, true);
+  t.onComplete.add(function() {
+    this.sprite.animations.play('default');
+  }, this);
 };

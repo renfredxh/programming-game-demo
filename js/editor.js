@@ -18,7 +18,7 @@ var GameEditor = {
    * Some default autocompletions to be included in every script.
    */
   autocomplete: [
-    { caption: 'print', value: 'print(', meta: 'function' },
+    { caption: 'print(text)', value: 'print(', meta: 'function' },
   ],
   /**
    * Autocomplete extension for ace that autocompletes variable and method names

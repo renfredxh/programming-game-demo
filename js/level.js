@@ -8,7 +8,8 @@ LevelObjectCollection.prototype.get = function(id) {
 
 Level = {
   name: "Demo",
-  playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
+  //playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
+  playerStart: { x: Util.fromTile(31), y: Util.fromTile(81) },
   tileMap: 'demoLevel',
   scriptDataset: {
     '31,88': {
@@ -17,6 +18,15 @@ Level = {
       autocomplete: [
         { caption: 'door', value: 'door'},
         { caption: 'open()', value: 'open()', meta: 'method', className: 'door' },
+        { caption: 'close()', value: 'close()', meta: 'method', className: 'door' },
+      ]
+    },
+    '27,81': {
+      level: "level-3.py",
+      player: "demo-3.py",
+      autocomplete: [
+        { caption: 'door', value: 'door'},
+        { caption: 'open(password)', value: 'open(', meta: 'method', className: 'door' },
         { caption: 'close()', value: 'close()', meta: 'method', className: 'door' },
       ]
     },
@@ -32,9 +42,10 @@ Level = {
       4: new this.Block('black', 9, 6)
     });
     this.doors = new LevelObjectCollection({
-      1: new this.Door(31, 84)
+      1: new this.Door(31, 84),
+      2: new this.Door(27, 77)
     });
-    new this.Variaball(41, 81, { script: '31,88', name: 'password' });
+    new this.Variaball(41, 81, { script: '27,81', name: 'password' });
   },
   update: function() {
     this.game.physics.arcade.collide(this.game.player, this.game.blocks);

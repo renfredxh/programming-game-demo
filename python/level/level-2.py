@@ -18,8 +18,4 @@ class Door:
         if self.obj.is_open:
             self.obj.close()
 
-if variables is not None:
-    if 'password' in variables:
-        print("Oh!")
-
 door = Door('1')

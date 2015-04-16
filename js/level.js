@@ -10,6 +10,17 @@ Level = {
   name: "Demo",
   playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
   tileMap: 'demoLevel',
+  scriptDataset: {
+    '31,88': {
+      level: "level-2.py",
+      player: "demo-2.py",
+      autocomplete: [
+        { caption: 'door', value: 'door'},
+        { caption: 'open()', value: 'open()', meta: 'method', className: 'door' },
+        { caption: 'close()', value: 'close()', meta: 'method', className: 'door' },
+      ]
+    },
+  },
   initialize: function(game) {
     this.game = game;
     this.game.blocks = this.game.add.group();
@@ -45,7 +56,7 @@ Level = {
     this.sprite.body.immovable = true;
     this.sprite.frame = 0;
     this.sprite.animations.add('default', [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4], 11, true);
-    this.sprite.animations.add('open', [0, 0, 5, 5, 0, 0, 5, 0, 5, 0, 5], 20, false);
+    this.sprite.animations.add('open', [0, 0, 5, 5, 0, 0, 5, 0, 5, 0, 5], 25, false);
     this.sprite.animations.play('default');
   },
 };
@@ -110,7 +121,7 @@ Level.Door.prototype.open = function() {
 };
 
 Level.Door.prototype.close = function() {
-  var t = game.add.tween(this.sprite).to({ x: this.sprite.x - 128 }, 800, Phaser.Easing.Quadratic.In, true);
+  var t = game.add.tween(this.sprite).to({ x: this.sprite.x - 128 }, 1000, Phaser.Easing.Quadratic.In, true);
   t.onComplete.add(function() {
     this.sprite.animations.play('default');
   }, this);

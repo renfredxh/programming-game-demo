@@ -116,6 +116,12 @@ BasicGame.Game.prototype = {
     }
     if (this.player.data.moving === false) {
       this.player.animations.stop();
+      this.player.frame = {
+        down: 0,
+        up: 1,
+        right: 2,
+        left: 3
+      }[this.player.data.facing];
       if (this.cursors.left.isDown) {
         this.player.frame = 3;
         this.player.animations.play('walk-left');

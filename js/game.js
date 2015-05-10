@@ -1,7 +1,8 @@
 BasicGame.Game = function(game) {
   this.DEBUG_MODE = false;
   this.PLAYER_ACCELERATION = 400;
-  this.PLAYER_VELOCITY = 256;
+  this.PLAYER_VELOCITY = 232;
+  this.PLAYER_WALK_SPEED = 10.5;
   this.editing = false;
   this.editor = GameEditor;
   this.level = Level;
@@ -21,12 +22,17 @@ BasicGame.Game.prototype = {
 
     // Player
     this.player = this.game.add.sprite(this.level.playerStart.x, this.level.playerStart.y, 'player');
+    this.player.frame = 1;
     this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
     this.player.body.collideWorldBounds = true;
     this.game.camera.follow(this.player);
 
     this.player.data = {};
     this.player.data.moving = false;
+    this.player.animations.add('walk-down', [0, 4, 8, 0], this.PLAYER_WALK_SPEED, false);
+    this.player.animations.add('walk-up', [1, 5, 9, 1], this.PLAYER_WALK_SPEED, false);
+    this.player.animations.add('walk-right', [2, 6, 2, 10, 2], 12, false);
+    this.player.animations.add('walk-left', [3, 7, 3, 11, 3], 12, false);
 
     // Scaling
     this.scale.setupScale(1280, 720);
@@ -109,19 +115,28 @@ BasicGame.Game.prototype = {
       this.playerCollide();
     }
     if (this.player.data.moving === false) {
+      this.player.animations.stop();
       if (this.cursors.left.isDown) {
+        this.player.frame = 3;
+        this.player.animations.play('walk-left');
         this.player.data.next = { x: this.player.body.x - 64, y: this.player.body.y };
         this.player.body.velocity.x = -this.PLAYER_VELOCITY;
         delta = 'left';
       } else if (this.cursors.right.isDown) {
+        this.player.frame = 2;
+        this.player.animations.play('walk-right');
         this.player.data.next = { x: this.player.body.x + 64, y: this.player.body.y };
         this.player.body.velocity.x = this.PLAYER_VELOCITY;
         delta = 'right';
       } else if (this.cursors.down.isDown) {
+        this.player.frame = 0;
+        this.player.animations.play('walk-down');
         this.player.data.next = { x: this.player.body.x, y: this.player.body.y + 64 };
         this.player.body.velocity.y = this.PLAYER_VELOCITY;
         delta = 'down';
       } else if (this.cursors.up.isDown) {
+        this.player.frame = 1;
+        this.player.animations.play('walk-up');
         this.player.data.next = { x: this.player.body.x, y: this.player.body.y - 64 };
         this.player.body.velocity.y = -this.PLAYER_VELOCITY;
         delta = 'up';

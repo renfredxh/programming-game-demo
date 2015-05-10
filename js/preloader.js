@@ -8,7 +8,6 @@ BasicGame.Preloader = function (game) {
 BasicGame.Preloader.prototype = {
 
   preload: function () {
-    this.load.image('player', 'assets/images/player.png');
     this.load.tilemap('demoLevel', 'assets/levels/demoLevel.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles', 'assets/images/tiles.png');
     this.load.image('hexground', 'assets/images/background.png');
@@ -16,6 +15,7 @@ BasicGame.Preloader.prototype = {
     this.load.spritesheet('door', 'assets/images/door.png', 128, 192);
     this.load.spritesheet('large-block', 'assets/images/large-block.png', 128, 128);
     this.load.spritesheet('variaball', 'assets/images/variaball.png', 64, 64);
+    this.load.spritesheet('player', 'assets/images/player-sheet.png', 128, 128);
 
     // Load game scripts via AJAX
     Level.scripts = {};

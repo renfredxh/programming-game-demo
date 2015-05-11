@@ -8,8 +8,7 @@ LevelObjectCollection.prototype.get = function(id) {
 
 Level = {
   name: "Demo",
-  //playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
-  playerStart: { x: Util.fromTile(38), y: Util.fromTile(82) },
+  playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
   tileMap: 'demoLevel',
   scriptDataset: {
     '31,88': {

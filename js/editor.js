@@ -1,5 +1,5 @@
 var GameEditor = {
-  SLIDE_ANIM_SPEED: 250,
+  SLIDE_ANIM_SPEED: 200,
   initialize: function() {
     this.$el = $('#editor');
     this.fontSize = "13pt";

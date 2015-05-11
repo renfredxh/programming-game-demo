@@ -58,6 +58,11 @@ body {
   height: 5%;
   background-color: #272822;
 }
+#variables {
+  padding-left: 10px;
+  color: #ffffff;
+  font-family: "Consolas", monospace;
+}
 #variables > .variable {
   padding: 1% 10px;
   margin-top: 1%;
@@ -67,6 +72,10 @@ body {
   display: inline-block;
   font-family: "Consolas", monospace;
   cursor: pointer;
+}
+#variables > .variable:hover {
+  background-color: #FBC02D;
+  color: #000;
 }
 .console {
   height: 25%;

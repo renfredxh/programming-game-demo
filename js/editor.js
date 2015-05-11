@@ -102,7 +102,7 @@ var GameEditor = {
     }
   },
   showVariables: function() {
-    $('#variables').empty();
+    $('#variables').html("Inventory: ");
     $.each(this.variables, function(i, variable) {
       $('#variables').append("<div class='variable'>" + variable + "</div>");
     });

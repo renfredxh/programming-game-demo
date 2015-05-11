@@ -87,6 +87,7 @@ var GameEditor = {
   },
   show: function(x, y) {
     this.scriptId = [x, y].toString();
+    console.log(this.scriptId);
     this.scripts = Level.scripts[this.scriptId];
     this.variables = Level.variables[this.scriptId];
     this.reposition();

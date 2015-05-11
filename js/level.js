@@ -11,6 +11,13 @@ Level = {
   playerStart: { x: Util.fromTile(31), y: Util.fromTile(91) },
   tileMap: 'demoLevel',
   scriptDataset: {
+    '12,87': {
+      level: "level-1.py",
+      player: "demo-1.py",
+      autocomplete: [
+        { caption: 'blocks', value: 'blocks'},
+      ]
+    },
     '31,88': {
       level: "level-2.py",
       player: "demo-2.py",
@@ -53,10 +60,10 @@ Level = {
     this.game.blocks = this.game.add.group();
     this.variables = {};
     this.blocks = new LevelObjectCollection({
-      1: new this.Block('black', 2, 2),
-      2: new this.Block('black', 9, 2),
-      3: new this.Block('black', 2, 6),
-      4: new this.Block('black', 9, 6)
+      1: new this.Block('black', 9, 90),
+      2: new this.Block('black', 16, 90),
+      3: new this.Block('black', 9, 84),
+      4: new this.Block('black', 16, 84)
     });
     this.doors = new LevelObjectCollection({
       1: new this.Door(31, 84),
@@ -171,6 +178,7 @@ Level.Block.prototype.update = function() {
  */
 Level.Door.prototype.open = function() {
   this.sprite.animations.play('open');
+  Level.game.sfx.door.play();
   var t = game.add.tween(this.sprite).to({ x: Util.fromTile(this.x) + 128 }, 1000, Phaser.Easing.Quadratic.Out, true, 800);
   t.onComplete.add(function() {
     this.is_open = true;

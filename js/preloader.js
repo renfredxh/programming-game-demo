@@ -16,6 +16,10 @@ BasicGame.Preloader.prototype = {
     this.load.spritesheet('large-block', 'assets/images/large-block.png', 128, 128);
     this.load.spritesheet('variaball', 'assets/images/variaball.png', 64, 64);
     this.load.spritesheet('player', 'assets/images/player-sheet.png', 128, 128);
+    this.load.audio('door', ['assets/sounds/door.ogg', 'assets/sounds/door.mp3', 'assets/sounds/door.wav']);
+    this.load.audio('complete', ['assets/sounds/complete.ogg', 'assets/sounds/complete.mp3', 'assets/sounds/complete.wav']);
+    this.load.audio('edit', ['assets/sounds/edit.ogg', 'assets/sounds/edit.mp3', 'assets/sounds/edit.wav']);
+    this.load.audio('pickup', ['assets/sounds/pickup.ogg', 'assets/sounds/pickup.mp3', 'assets/sounds/pickup.wav']);
 
     // Load game scripts via AJAX
     Level.scripts = {};

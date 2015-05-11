@@ -8,6 +8,7 @@ BasicGame.Game = function(game) {
   this.level = Level;
   this.dialogTimer = 0;
   this.dialogShowing = false;
+  this.completed = false;
 };
 
 BasicGame.Game.prototype = {
@@ -21,6 +22,14 @@ BasicGame.Game.prototype = {
     this.map.addTilesetImage('tiles');
     this.lowerLayer = this.map.createLayer(0);
     this.lowerLayer.resizeWorld();
+
+    // Sfx
+    this.sfx = {
+      door: this.add.audio('door'),
+      edit: this.add.audio('edit', 0.2),
+      complete: this.add.audio('complete'),
+      pickup: this.add.audio('pickup')
+    };
 
     // Player
     this.player = this.game.add.sprite(this.level.playerStart.x, this.level.playerStart.y, 'player');
@@ -93,8 +102,10 @@ BasicGame.Game.prototype = {
       return;
     }
     var onGoalTile = currentTile.properties.goal === '1';
-    if (onGoalTile) {
+    if (onGoalTile && this.completed === false) {
       $('#overview').slideDown();
+      this.sfx.complete.play();
+      this.completed = true;
     }
   },
 
@@ -113,6 +124,7 @@ BasicGame.Game.prototype = {
     if (onEditorTile) {
       if (this.editing === false && this.editReady === true) {
         this.editing = true;
+        this.sfx.edit.play();
         this.editor.show(currentTile.x, currentTile.y);
         this.editReady = false;
       }
@@ -195,6 +207,7 @@ BasicGame.Game.prototype = {
     }
     variables[scriptId].push(newVariable.name);
     variaball.kill();
+    this.sfx.pickup.play();
     this.showDialog("New variable obtained: \"" + newVariable.name + "\"");
   },
 

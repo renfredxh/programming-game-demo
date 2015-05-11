@@ -76,6 +76,7 @@ BasicGame.Game.prototype = {
     this.movePlayer();
     this.updateEditMode();
     this.level.update();
+    this.checkGoal();
   },
 
   scrollBackground: function() {
@@ -84,6 +85,17 @@ BasicGame.Game.prototype = {
 
   playerCollide: function() {
     this.player.data.moving = false;
+  },
+
+  checkGoal: function() {
+    var currentTile = this.map.getTileWorldXY(this.player.body.x, this.player.body.y);
+    if (currentTile === null) {
+      return;
+    }
+    var onGoalTile = currentTile.properties.goal === '1';
+    if (onGoalTile) {
+      $('#overview').slideDown();
+    }
   },
 
   updateEditMode: function() {

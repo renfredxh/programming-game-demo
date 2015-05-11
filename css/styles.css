@@ -94,6 +94,26 @@ body {
   overflow-y: scroll;
   display: none;
 }
+.overview {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25%;
+  z-index: 100;
+  margin: 0 1.5%;
+  background-color: #212121;
+  color: #ffffff;
+  opacity: 0.9;
+  padding: 18px 15px;
+  font-family: "Consolas", monospace;
+  display: none;
+}
+.overview ul {
+  list-style: none;
+}
+.overview-title {
+  font-size: 28px;
+}
 .console {
   height: 25%;
   padding: 14px;

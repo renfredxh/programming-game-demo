@@ -77,6 +77,23 @@ body {
   background-color: #FBC02D;
   color: #000;
 }
+.dialog {
+  position: absolute;
+  bottom: 0;
+  width: 97%;
+  height: 15%;
+  z-index: 100;
+  margin: 0 1.5%;
+  margin-bottom: 1%;
+  background-color: #fff;
+  opacity: 0.95;
+  font-family: "Consolas", monospace;
+  color: #000;
+  font-size: 28px;
+  padding: 18px 15px;
+  overflow-y: scroll;
+  display: none;
+}
 .console {
   height: 25%;
   padding: 14px;

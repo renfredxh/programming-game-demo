@@ -6,6 +6,8 @@ BasicGame.Game = function(game) {
   this.editing = false;
   this.editor = GameEditor;
   this.level = Level;
+  this.dialogTimer = 0;
+  this.dialogShowing = false;
 };
 
 BasicGame.Game.prototype = {
@@ -151,6 +153,9 @@ BasicGame.Game.prototype = {
     if (delta !== null && this.player.data.moving === false) {
       this.player.data.facing = delta;
       this.player.data.moving = true;
+      if (this.dialogShowing === true) {
+        this.time.events.add(this.dialogTimer - this.game.time.now, this.hideDialog, this);
+      }
     }
     if (this.player.data.moving === true) {
       if ({
@@ -178,6 +183,20 @@ BasicGame.Game.prototype = {
     }
     variables[scriptId].push(newVariable.name);
     variaball.kill();
+    this.showDialog("New variable obtained: \"" + newVariable.name + "\"");
+  },
+
+  showDialog: function(text) {
+    $('#dialog').text(text);
+    $('#dialog').slideDown();
+    this.dialogTimer = this.time.now + 1200;
+    this.dialogShowing = true;
+  },
+
+  hideDialog: function() {
+    $('#dialog').text("");
+    $('#dialog').slideUp();
+    this.dialogShowing = false;
   },
 
   quitGame: function(pointer) {

@@ -5,6 +5,9 @@ SCRIPT_ID = '22,74'
 level = window.Level
 variables = (level.variables.to_dict()).get(SCRIPT_ID)
 
+def hint():
+    print('This door needs a key instead of a password, try finding it!')
+
 class MissingKeyError(Exception):
     pass
 

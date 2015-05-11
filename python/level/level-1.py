@@ -2,6 +2,9 @@ from browser import window
 
 level = window.Level
 
+def hint():
+    print('Try blocks[0].color = "blue"')
+
 class Block:
 
     def __init__(self, id):

@@ -1,4 +1,5 @@
 var GameEditor = {
+  SLIDE_ANIM_SPEED: 250,
   initialize: function() {
     this.$el = $('#editor');
     this.fontSize = "13pt";
@@ -89,14 +90,13 @@ var GameEditor = {
     this.scripts = Level.scripts[this.scriptId];
     this.variables = Level.variables[this.scriptId];
     this.reposition();
-    this.$el.show();
+    this.$el.show('slide', { direction: 'right' }, this.SLIDE_ANIM_SPEED);
     this.editor = ace.edit('script');
     this.configure();
     $('#console').css({ fontSize: this.fontSize });
     if (this.variables && this.variables.length > 0) {
       this.showVariables();
     } else {
-      console.log(this.variables);
       $('#variables').hide();
       $('#script').css('height', '75%');
     }
@@ -115,7 +115,7 @@ var GameEditor = {
     $('#variables').show();
   },
   hide: function() {
-    this.$el.hide();
+    this.$el.hide('slide', { direction: 'right' }, this.SLIDE_ANIM_SPEED);
     if (this.editor !== null) {
       this.scripts.player = this.editor.getValue();
     }
